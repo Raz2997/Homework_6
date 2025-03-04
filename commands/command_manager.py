@@ -1,3 +1,8 @@
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 from dotenv import load_dotenv
 import os
 import logging
@@ -10,6 +15,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 env = os.getenv("ENVIRONMENT", "production")
 logger.info(f"CommandManager initialized in {env} environment")
+
 
 class CommandManager:
     """Manages command registration and execution."""
@@ -27,9 +33,10 @@ class CommandManager:
             logger.info(f"[{env}] Executing command: {name}")
             self.commands[name].execute()
         else:
+
             logger.warning(f"[{env}] Command '{name}' not found.")
 
-# Optional: Add a basic REPL if no main.py exists
+# Add a basic REPL if no main.py exists
 if __name__ == "__main__":
     from commands.basic_commands import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
     from commands.menu_command import MenuCommand
@@ -47,3 +54,4 @@ if __name__ == "__main__":
             logger.info("Exiting calculator")
             break
         manager.execute(cmd)
+
