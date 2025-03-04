@@ -1,7 +1,3 @@
-import logging
-
-logger = logging.getLogger(__name__)
-
 class MenuCommand:
     """Command to display available commands."""
     
@@ -9,7 +5,7 @@ class MenuCommand:
         self.command_manager = command_manager
 
     def execute(self):
-        logger.info("\nAvailable Commands:")
+        print("\nAvailable Commands:")
         for command in self.command_manager.commands.keys():
-            logger.info(f"- {command}")
-        logger.info("Type 'exit' to quit the calculator.")
+            print(f"- {command}")
+        print("Type 'exit' to quit the calculator.")

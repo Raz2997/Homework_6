@@ -14,7 +14,7 @@ class Calculation:
         self.result = result
 
     def __repr__(self) -> str:
-        return f"{self.operand1} {self.operation} {self.operand2} = {self.result}"
+        return f"{self.operand1:.1f} {self.operation} {self.operand2:.1f} = {self.result:.1f}"
 
 class Calculations:
     """Stores a history of calculations."""
