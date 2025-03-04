@@ -1,9 +1,15 @@
 from dotenv import load_dotenv
 import os
+import logging
 
-load_dotenv()  # Load .env file
-env = os.getenv("ENVIRONMENT", "production")  # Default to "production" if not found
-print(f"Running in {env} environment")
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Load environment variables
+load_dotenv()
+env = os.getenv("ENVIRONMENT", "production")
+logger.info(f"CommandManager initialized in {env} environment")
 
 class CommandManager:
     """Manages command registration and execution."""
@@ -18,6 +24,26 @@ class CommandManager:
     def execute(self, name):
         """Execute a registered command."""
         if name in self.commands:
+            logger.info(f"[{env}] Executing command: {name}")
             self.commands[name].execute()
         else:
-            print(f"Command '{name}' not found.")
+            logger.warning(f"[{env}] Command '{name}' not found.")
+
+# Optional: Add a basic REPL if no main.py exists
+if __name__ == "__main__":
+    from commands.basic_commands import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+    from commands.menu_command import MenuCommand
+    
+    manager = CommandManager()
+    manager.register("add", AddCommand())
+    manager.register("subtract", SubtractCommand())
+    manager.register("multiply", MultiplyCommand())
+    manager.register("divide", DivideCommand())
+    manager.register("menu", MenuCommand(manager))
+
+    while True:
+        cmd = input("Enter command: ").strip().lower()
+        if cmd == "exit":
+            logger.info("Exiting calculator")
+            break
+        manager.execute(cmd)
