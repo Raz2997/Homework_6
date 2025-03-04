@@ -1,3 +1,10 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load .env file
+env = os.getenv("ENVIRONMENT", "production")  # Default to "production" if not found
+print(f"Running in {env} environment")
+
 class CommandManager:
     """Manages command registration and execution."""
     
