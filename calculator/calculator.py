@@ -1,5 +1,9 @@
 import os
 from typing import List, Type
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class Calculation:
     """Represents a single arithmetic calculation."""
@@ -34,24 +38,29 @@ class Calculator:
     def add(a: float, b: float) -> float:
         result = a + b
         Calculations.add_calculation(Calculation(a, b, '+', result))
+        logger.info(f"Performed addition: {a} + {b} = {result}")
         return result
     
     @staticmethod
     def subtract(a: float, b: float) -> float:
         result = a - b
         Calculations.add_calculation(Calculation(a, b, '-', result))
+        logger.info(f"Performed subtraction: {a} - {b} = {result}")
         return result
     
     @staticmethod
     def multiply(a: float, b: float) -> float:
         result = a * b
         Calculations.add_calculation(Calculation(a, b, '*', result))
+        logger.info(f"Performed multiplication: {a} * {b} = {result}")
         return result
     
     @staticmethod
     def divide(a: float, b: float) -> float:
         if b == 0:
+            logger.error("Attempted division by zero")
             raise ZeroDivisionError("Cannot divide by zero.")
         result = a / b
         Calculations.add_calculation(Calculation(a, b, '/', result))
+        logger.info(f"Performed division: {a} / {b} = {result}")
         return result

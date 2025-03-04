@@ -1,9 +1,6 @@
-from dotenv import load_dotenv
-import os
+import logging
 
-load_dotenv()  # Load .env file
-env = os.getenv("ENVIRONMENT", "production")  # Default to "production" if not found
-print(f"Running in {env} environment")
+logger = logging.getLogger(__name__)
 
 class CommandManager:
     """Manages command registration and execution."""
@@ -20,4 +17,4 @@ class CommandManager:
         if name in self.commands:
             self.commands[name].execute()
         else:
-            print(f"Command '{name}' not found.")
+            logger.warning(f"Command '{name}' not found.")
